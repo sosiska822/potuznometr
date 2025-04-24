@@ -64,48 +64,58 @@
         <button onclick="measurePower()">ИЗМЕРИТЬ</button>
     </div>
 
+    <!-- Звуковые элементы -->
     <audio id="lowPowerSound" src="svirepyiy-nedovolnyiy-protyajnyiy-rv-kabana.mp3" preload="auto"></audio>
     <audio id="mediumPowerSound" src="porosyachiy-vizg.mp3" preload="auto"></audio>
     <audio id="highPowerSound" src="porosyachiy-vizg.mp3" preload="auto"></audio>
 
     <script>
         function measurePower() {
-            const power = Math.floor(Math.random() * 10000);
-            const powerFill = document.getElementById("powerFill");
-            const resultText = document.getElementById("result");
-            const emojiResult = document.getElementById("emojiResult");
-            const lowPowerSound = document.getElementById("lowPowerSound");
-            const mediumPowerSound = document.getElementById("mediumPowerSound");
-            const highPowerSound = document.getElementById("highPowerSound");
+            const power = Math.floor(Math.random() * 10000); // Генерируем случайное значение мощности
+            const powerFill = document.getElementById("powerFill"); // Получаем элемент для заполнения шкалы
+            const resultText = document.getElementById("result"); // Получаем элемент для текста результата
+            const emojiResult = document.getElementById("emojiResult"); // Получаем элемент для эмодзи
 
-            // Fill the power bar animation
+            const lowPowerSound = document.getElementById("lowPowerSound"); // Получаем элемент для звука низкой мощности
+            const mediumPowerSound = document.getElementById("mediumPowerSound"); // Получаем элемент для звука средней мощности
+            const highPowerSound = document.getElementById("highPowerSound"); // Получаем элемент для звука высокой мощности
+
+            // Анимация заполнения шкалы
             powerFill.style.width = `${power / 100}%`;
 
-            // Results with meme comments
+            // Определяем комментарий, эмодзи и звук в зависимости от мощности
             let comment = "";
             let emoji = "🧪";
-            let soundToPlay = null;  // Добавляем переменную для хранения звука
+            let soundToPlay = null;
 
             if (power < 1000) {
                 comment = `Твоя потужность: ${power} единиц. Слабо!`;
                 emoji = "🪫";
-                soundToPlay = lowPowerSound; // Выбираем звук для низкой мощности
+                soundToPlay = lowPowerSound;
             } else if (power < 5000) {
                 comment = `Твоя потужность: ${power} единиц. Норм!`;
                 emoji = "🔋";
-                soundToPlay = mediumPowerSound; // Выбираем звук для средней мощности
+                soundToPlay = mediumPowerSound;
             } else {
                 comment = `Твоя потужность: ${power} единиц. МЕГАПОТУГ!`;
                 emoji = "🚀";
-                soundToPlay = highPowerSound; // Выбираем звук для высокой мощности
+                soundToPlay = highPowerSound;
             }
 
+            // Выводим результат
             resultText.innerText = comment;
             emojiResult.innerText = emoji;
 
-            // Play sound
+            // Воспроизводим звук (если он определен)
             if (soundToPlay) {
-                soundToPlay.play();  // Воспроизводим выбранный звук
+                try {
+                  soundToPlay.play();
+                } catch (error) {
+                  console.error("Ошибка при воспроизведении звука:", error);
+                  alert("Не удалось воспроизвести звук. Проверьте консоль.");
+                }
+            } else {
+                console.warn("Не выбран звуковой эффект для этой мощности.");
             }
         }
     </script>
