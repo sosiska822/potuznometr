@@ -64,7 +64,9 @@
         <button onclick="measurePower()">ИЗМЕРИТЬ</button>
     </div>
 
-    <audio id="powerSound" src="odinochnyiy-krik-svini.mp3" preload="auto"></audio>
+    <audio id="lowPowerSound" src="svirepyiy-nedovolnyiy-protyajnyiy-rv-kabana.mp3" preload="auto"></audio>
+    <audio id="mediumPowerSound" src="porosyachiy-vizg.mp3" preload="auto"></audio>
+    <audio id="highPowerSound" src="porosyachiy-vizg.mp3" preload="auto"></audio>
 
     <script>
         function measurePower() {
@@ -72,7 +74,9 @@
             const powerFill = document.getElementById("powerFill");
             const resultText = document.getElementById("result");
             const emojiResult = document.getElementById("emojiResult");
-            const powerSound = document.getElementById("powerSound"); // Get the audio element
+            const lowPowerSound = document.getElementById("lowPowerSound");
+            const mediumPowerSound = document.getElementById("mediumPowerSound");
+            const highPowerSound = document.getElementById("highPowerSound");
 
             // Fill the power bar animation
             powerFill.style.width = `${power / 100}%`;
@@ -80,23 +84,29 @@
             // Results with meme comments
             let comment = "";
             let emoji = "🧪";
+            let soundToPlay = null;  // Добавляем переменную для хранения звука
 
             if (power < 1000) {
                 comment = `Твоя потужность: ${power} единиц. Слабо!`;
                 emoji = "🪫";
+                soundToPlay = lowPowerSound; // Выбираем звук для низкой мощности
             } else if (power < 5000) {
                 comment = `Твоя потужность: ${power} единиц. Норм!`;
                 emoji = "🔋";
+                soundToPlay = mediumPowerSound; // Выбираем звук для средней мощности
             } else {
                 comment = `Твоя потужность: ${power} единиц. МЕГАПОТУГ!`;
                 emoji = "🚀";
+                soundToPlay = highPowerSound; // Выбираем звук для высокой мощности
             }
 
             resultText.innerText = comment;
             emojiResult.innerText = emoji;
 
             // Play sound
-            powerSound.play();
+            if (soundToPlay) {
+                soundToPlay.play();  // Воспроизводим выбранный звук
+            }
         }
     </script>
 </body>
